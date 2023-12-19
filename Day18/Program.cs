@@ -1,4 +1,5 @@
-﻿PartOne();
+﻿
+PartOne();
 PartTwo();
 
 void PartOne()
@@ -83,6 +84,37 @@ void PartTwo()
     Console.WriteLine(ans);
 
 }
+
+long SolveShoelace(List<(int dir, int step)> data)
+{
+    var dir = new (int x, int y)[] {
+        (1, 0), //down
+         (-1, 0), //up
+         (0, -1), //left
+         (0, 1), //right
+          };
+    var x = 0L;
+    var y = 0L;
+    var perimeter = 0L;
+    var points = new List<(long x, long y)>();
+    points.Add((0, 0));
+    foreach (var inst in data)
+    {
+        x = x + dir[inst.dir].x * inst.step;
+        y = y + dir[inst.dir].y * inst.step;
+        points.Add((x, y));
+        perimeter += inst.step;
+    }
+    var area = 0L;
+    points.Reverse();
+    for (int i = 0; i < points.Count - 1; i++)
+    {
+        area += ((points[i].x * points[i + 1].y) - (points[i + 1].x * points[i].y));
+    }
+    area /= 2;
+    return 1 + area + (perimeter / 2);
+
+}
 long Solve(List<(int dir, int step)> data)
 {
     var dir = new (int x, int y)[] {
@@ -104,11 +136,14 @@ long Solve(List<(int dir, int step)> data)
         if (inst.dir == 0)
             area += y * inst.step;
         // if we going down, count rectangle of width y and height inst.step by removing it from area.
-        else if (inst.dir==1)
+        else if (inst.dir == 1)
             area -= y * inst.step;
     }
     // Pick's theorem 
     // https://en.wikipedia.org/wiki/Pick's_theorem
+    // A = I +B/2-1
+    // we looking for I+B, so I = A-B/2 +1
+    // I+B = A+B/2 +1
     return 1 + area + perimeter / 2;
 }
 List<(int dir, int step)> Parse(string fileName, bool partTwo)
@@ -130,11 +165,3 @@ List<(int dir, int step)> Parse(string fileName, bool partTwo)
     }
     return res;
 }
-
-/*
-#####
-# # #
-# # #
-#####
-
-*/
