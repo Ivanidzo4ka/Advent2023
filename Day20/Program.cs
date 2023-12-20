@@ -122,11 +122,10 @@ long Gcd(long a, long b)
 (Dictionary<string, FlipFlop> flops, Dictionary<string, Conjuction> conj, string[] broadCast) Parse(string fileName)
 {
     var lines = File.ReadAllLines(fileName);
-    var broadCast = lines[0].Substring("broadcaster -> ".Length).Split(",", StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
-
+    string[] broadCast = null;
     var flops = new Dictionary<string, FlipFlop>();
     var conj = new Dictionary<string, Conjuction>();
-    for (int i = 1; i < lines.Length; i++)
+    for (int i = 0; i < lines.Length; i++)
     {
         if (lines[i][0] == '%')
         {
@@ -135,12 +134,16 @@ long Gcd(long a, long b)
             var sendTo = lines[i].Substring(t + 2).Split(",", StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
             flops.Add(name, new FlipFlop(sendTo));
         }
-        else
+        else if (lines[i][0]=='&')
         {
             var t = lines[i].IndexOf("->");
             var name = lines[i].Substring(1, t - 2);
             var sendTo = lines[i].Substring(t + 2).Split(",", StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
             conj.Add(name, new Conjuction(sendTo));
+        }
+        else 
+        {
+            broadCast = lines[i].Substring("broadcaster -> ".Length).Split(",", StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
         }
     }
 
