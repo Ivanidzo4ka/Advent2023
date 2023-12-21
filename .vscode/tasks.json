@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Day20/Day20.csproj",
+                "${workspaceFolder}/Day21/Day21.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -21,7 +21,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/Day20/Day20.csproj"
+                "${workspaceFolder}/Day21/Day21.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
