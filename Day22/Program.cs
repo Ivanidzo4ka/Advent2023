@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices.Marshalling;
-
-PartOne();
+﻿PartOne();
 PartTwo();
 
 void PartOne()
